@@ -13,9 +13,9 @@ no = {"Nope.", "Nah.", "No.", "Make me.", "Nuh-uh.", "No way."}
 reply_cmds = {{"?ubot", "My name is UBot, I was made by Urumasi in Lua using LÖVE."}, {"?love", "LÖVE is available at http://love2d.org/"}}
 
 function getF(fn)
-	local file = io.open(fn, "r")
-	local jf = file:read("*a")
-	file:close()
+	fil = io.open(fn, "r")
+	jf = fil:read("*a")
+	fil:close()
 	return json.decode(jf)
 end
 function trim(s)
@@ -30,10 +30,10 @@ function tFind(t, a)
 	return nil
 end
 function saveP()
-	local jsonString = json.encode({ADMINS, OPS, TRUSTED})
-	local file = io.open("perms.json", "w")
-	file:write(jsonString)
-	file:close()
+	jsonString = json.encode({ADMINS, OPS, TRUSTED})
+	fil = io.open("perms.json", "w")
+	fil:write(jsonString)
+	fil:close()
 	clog("Saved "..jsonString)
 end
 
@@ -245,7 +245,7 @@ function clog(m)
 end
 
 function love.load()
-	local jt = getF("perms.json")
+	jt = getF("perms.json")
 	ADMINS = jt[1]
 	OPS = jt[2]
 	TRUSTED = jt[3]
@@ -264,7 +264,7 @@ function love.load()
 	ping()
 	client:send("JOIN "..BOT.CHAN.."\r\n")
 	ping()
-	client:send("PRIVMSG nickserv identify SECRET\r\n") --I don't want you to see my bot's password
+	client:send("PRIVMSG nickserv identify huebot\r\n")
 	sendM("Hello!")
 	client:settimeout(0)
 end
@@ -281,7 +281,9 @@ function love.update()
 			nm = string.sub(IRC.msg, 2, string.find(IRC.msg, "!")-1)
 			clog()
 			if rawtext==0 then
-				if BOT.NICK==nm then
+				if string.lower(nm)=="yodapack" then
+					lto = "[MINECRAFT] "
+				elseif BOT.NICK==nm then
 					lto = "[BOT] "
 				elseif tFind(ADMINS, nm) then
 					lto = "[ADMIN] "
@@ -317,6 +319,8 @@ function love.draw()
 				love.graphics.setColor(255, 85, 85, 255)
 			elseif string.sub(history[#history+i-hamm], 1, 9)=="[TRUSTED]" then
 				love.graphics.setColor(255, 170, 170, 255)
+			elseif string.sub(history[#history+i-hamm], 1, 11)=="[MINECRAFT]" then
+				love.graphics.setColor(170, 170, 255, 255)
 			else
 				love.graphics.setColor(255, 255, 255, 255)
 			end
