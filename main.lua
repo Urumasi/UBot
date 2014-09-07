@@ -8,7 +8,7 @@ curC = BOT.CHAN
 rawtext = 0
 typing = nil
 
-source = "http://pastebin.com/fdKKZn6P"
+source = "https://github.com/Urumasi/UBot"
 no = {"Nope.", "Nah.", "No.", "Make me.", "Nuh-uh.", "No way."}
 reply_cmds = {{"?ubot", "My name is UBot, I was made by Urumasi in Lua using LÖVE."}, {"?love", "LÖVE is available at http://love2d.org/"}}
 
